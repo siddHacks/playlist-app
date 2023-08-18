@@ -30,9 +30,12 @@ public class Main {
             System.out.println("Your playlist is empty!!");
             return;
         }
+
+
         ListIterator<Song> itr = myPlayList.listIterator();
         System.out.println("Now playing");
         System.out.println(itr.next());
+        boolean wasNext = true;
 
         Scanner sc = new Scanner(System.in);
 
@@ -47,22 +50,41 @@ public class Main {
                     printMenu();
                     break;
                 case 2:
+                    if(wasNext == false){
+                        itr.next();
+                        wasNext = true;
+                    }
                     if(!itr.hasNext()){
                         System.out.println("You have reached the end of the playlist");
                     }else{
                         System.out.println("Currently playing"+itr.next());
+                        wasNext = true;
                     }
                     break;
                 case 3:
+                    if(wasNext == true){
+                        itr.previous();
+                        wasNext = false;
+                    }
                     if(!itr.hasPrevious()){
-                        System.out.println("You are at starting of the playlist"+itr.previous());
+                        System.out.println("You are at starting of the playlist");
                     }else{
                         System.out.println("currently playing"+itr.previous());
+                        wasNext = false;
                     }
                     break;
                 case 4:
+                    if(wasNext){
+                        System.out.println("Currently playing"+itr.previous());
+                        wasNext = false;
+                    }else{
+                        System.out.println("Currently playing"+itr.next());
+                        wasNext = true;
+                    }
                     break;
                 case 5:
+                   itr.remove();
+                    System.out.println("Song removed");
                     break;
                 case 6:
                     printSongs(myPlayList);
